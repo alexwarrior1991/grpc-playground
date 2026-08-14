@@ -1,0 +1,9 @@
+### Get account balance
+GRPC localhost:6565/sec06.BankService/GetAccountBalance
+Content-Type: application/json
+
+{
+  "account_number": 5
+}
+
+###
