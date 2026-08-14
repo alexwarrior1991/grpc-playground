@@ -6,4 +6,10 @@ Content-Type: application/json
   "account_number": 5
 }
 
+### Get all accounts
+GRPC localhost:6565/sec06.BankService/GetAllAccounts
+Content-Type: application/stream+json
+
+{}
+
 ###
