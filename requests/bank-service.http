@@ -12,4 +12,10 @@ Content-Type: application/stream+json
 
 {}
 
-###
+### Withdraw / Deduct money
+GRPC localhost:6565/sec06.BankService/Withdraw
+
+{
+  "account_number": 1,
+  "amount": 50
+}
