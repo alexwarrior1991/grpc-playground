@@ -3,6 +3,7 @@ package com.alejandro.sec06;
 import com.alejandro.models.sec06.*;
 import com.alejandro.models.sec06.BankServiceGrpc;
 import com.alejandro.sec06.repository.AccountRepository;
+import com.alejandro.sec06.requestHandlers.DepositRequestHandler;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
@@ -70,5 +71,10 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
                     Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
                 });
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<DepositRequest> deposit(StreamObserver<AccountBalance> responseObserver) {
+        return new DepositRequestHandler(responseObserver);
     }
 }
