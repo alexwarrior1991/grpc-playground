@@ -40,12 +40,12 @@ public class TransferRequestHandler implements StreamObserver<TransferRequest> {
         this.responseObserver.onCompleted();
     }
 
-    private TransferStatus transfer(TransferRequest request){
+    private TransferStatus transfer(TransferRequest request) {
         var amount = request.getAmount();
         var fromAccount = request.getFromAccount();
         var toAccount = request.getToAccount();
         var status = TransferStatus.REJECTED;
-        if (AccountRepository.getBalance(fromAccount) >= amount && (fromAccount != toAccount)){
+        if (AccountRepository.getBalance(fromAccount) >= amount && (fromAccount != toAccount)) {
             AccountRepository.deductAmount(fromAccount, amount);
             AccountRepository.addAmount(toAccount, amount);
             status = TransferStatus.COMPLETED;
@@ -53,7 +53,7 @@ public class TransferRequestHandler implements StreamObserver<TransferRequest> {
         return status;
     }
 
-    private AccountBalance toAccountBalance(int accountNumber){
+    private AccountBalance toAccountBalance(int accountNumber) {
         return AccountBalance.newBuilder()
                 .setAccountNumber(accountNumber)
                 .setBalance(AccountRepository.getBalance(accountNumber))
