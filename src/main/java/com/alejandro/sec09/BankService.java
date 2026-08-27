@@ -4,8 +4,6 @@ import com.alejandro.models.sec09.*;
 import com.alejandro.sec09.repository.AccountRepository;
 import com.alejandro.sec09.validator.RequestValidator;
 import com.google.common.util.concurrent.Uninterruptibles;
-import com.google.protobuf.Empty;
-import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
