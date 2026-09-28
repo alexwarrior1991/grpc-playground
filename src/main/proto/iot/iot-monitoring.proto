@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package iot;
+
+option java_multiple_files = true;
+option java_package = "com.alejandro.iot.models";
+
+service IotMonitoringService {
+  rpc Monitor(stream SensorEvent) returns (stream ServerEvent);
+}
+
+message SensorEvent {
+  string device_id = 1;
+  int64 timestamp_epoch_millis = 2;
+
+  oneof payload {
+    TemperatureReading temperature = 10;
+    HumidityReading humidity = 11;
+    PressureReading pressure = 12;
+    DeviceStatus status = 13;
+  }
+}
+
+message TemperatureReading {
+  double celsius = 1;
+}
+
+message HumidityReading {
+  double percentage = 1;
+}
+
+message PressureReading {
+  double hpa = 1;
+}
+
+message DeviceStatus {
+  string firmware_version = 1;
+  int32 battery_percentage = 2;
+}
+
+message ServerEvent {
+  string device_id = 1;
+  bool accepted = 2;
+  string message = 3;
+}
+
+enum ValidationCode {
+  VALIDATION_CODE_UNSPECIFIED = 0;
+  MISSING_DEVICE_ID = 1;
+  MISSING_PAYLOAD = 2;
+  INVALID_TEMPERATURE = 3;
+  INVALID_HUMIDITY = 4;
+  INVALID_PRESSURE = 5;
+  INVALID_BATTERY = 6;
+  STALE_TIMESTAMP = 7;
+}
+
+message ErrorMessage {
+  string request_id = 1;
+  ValidationCode validation_code = 2;
+
+  oneof details {
+    MissingFieldError missing_field = 10;
+    NumericRangeError numeric_range = 11;
+    TimeWindowError time_window = 12;
+  }
+}
+
+message MissingFieldError {
+  string field_name = 1;
+}
+
+message NumericRangeError {
+  string field_name = 1;
+  double actual_value = 2;
+  double min_allowed = 3;
+  double max_allowed = 4;
+}
+
+message TimeWindowError {
+  int64 event_timestamp_epoch_millis = 1;
+  int64 server_timestamp_epoch_millis = 2;
+  int64 max_age_millis = 3;
+}
