@@ -1,13 +1,13 @@
 package com.alejandro.common;
 
-import com.alejandro.sec06.BankService;
 import com.alejandro.sec06.TransferService;
 import com.alejandro.sec07.FlowControlService;
+import com.alejandro.sec09.BankService;
 
 public class Demo {
 
     static void main() {
-        GrpcServer.create(new FlowControlService())
+        GrpcServer.create(new BankService())
                 .start()
                 .await();
     }
